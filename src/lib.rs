@@ -50,6 +50,7 @@ extern crate digest;
 extern crate generic_array;
 extern crate rand_core;
 extern crate blake2;
+extern crate serde;
 
 #[cfg(test)]
 extern crate rand;

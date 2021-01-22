@@ -6,6 +6,7 @@ use curve25519_dalek::ristretto::RistrettoPoint;
 use curve25519_dalek::scalar::Scalar;
 use digest::Digest;
 use rand_core::OsRng;
+use serde::{Serialize, Deserialize};
 
 static KEY0: &'static [u8] = b"rustfujisakisuzukihash0";
 static KEY1: &'static [u8] = b"rustfujisakisuzukihash1";
@@ -13,7 +14,7 @@ static KEY2: &'static [u8] = b"rustfujisakisuzukihash2";
 
 /// A Fujisaki signature. The size of `Signature` scales proportionally with the number of public
 /// keys in the ring.
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Signature {
     aa1: RistrettoPoint,
     cs: Vec<Scalar>,
