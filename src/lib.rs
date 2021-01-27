@@ -58,6 +58,7 @@ extern crate rand;
 pub mod key;
 pub mod sig;
 pub mod trace;
+pub mod bindings;
 
 pub use key::*;
 pub use sig::*;
