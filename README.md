@@ -27,10 +27,10 @@ in `example` folder.
 
 To build examples written in C
 
-``bash
+```bash
 cd examples
 mkdir build
 cd build
 cmake -GNinja ..
 ninja
-``
+```
