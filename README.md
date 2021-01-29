@@ -19,3 +19,18 @@ at your choice.
 
 ## Warning
 This crate should not be used in any serious contexts. It is not secure.
+
+## C-bindings
+
+To generate C-bindings, run `./generate-c-header.sh`. See examples of C bindings
+in `example` folder.
+
+To build examples written in C
+
+``bash
+cd examples
+mkdir build
+cd build
+cmake -GNinja ..
+ninja
+``
