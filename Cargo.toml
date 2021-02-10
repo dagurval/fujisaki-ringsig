@@ -11,6 +11,7 @@ documentation = "https://docs.rs/fujisaki_ringsig"
 
 [lib]
 crate-type=["cdylib"]
+# crate-type=["staticlib"]
 
 [dependencies]
 blake2 = "0.9"

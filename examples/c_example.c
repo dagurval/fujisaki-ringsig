@@ -1,4 +1,4 @@
-#include "c_header.h"
+#include "fujisaki_ringsig.h"
 
 #include <assert.h>
 
