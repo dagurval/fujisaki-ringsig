@@ -10,8 +10,7 @@ repository = "https://github.com/rozbb/fujisaki-ringsig"
 documentation = "https://docs.rs/fujisaki_ringsig"
 
 [lib]
-crate-type=["cdylib"]
-# crate-type=["staticlib"]
+crate-type=["cdylib", "staticlib"]
 
 [dependencies]
 blake2 = "0.9"
