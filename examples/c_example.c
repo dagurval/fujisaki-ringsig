@@ -7,7 +7,12 @@
 int main(int arc, char** argv) {
     OPAQUE_PTR kp1 = generate_keypair();
     OPAQUE_PTR kp2 = generate_keypair();
-    OPAQUE_PTR kp3 = generate_keypair();
+
+    uint8_t seed[32];
+    for (size_t i = 0; i < 32; ++i) {
+        seed[i] = 'A';
+    }
+    OPAQUE_PTR kp3 = generate_keypair_from_bits(seed);
 
     uint8_t pubkey[32];
     uint8_t privkey[64];
@@ -15,7 +20,7 @@ int main(int arc, char** argv) {
     const char* election_id = "someid";
     const size_t nelection_id = sizeof "someid";
 
-    OPAQUE_PTR tag = init_tag(election_id, nelection_id);
+    OPAQUE_PTR tag = init_tag((const uint8_t *) election_id, nelection_id);
 
     assert(get_pubkey(&kp1, &pubkey));
     assert(tag_add_pubkey(&tag, pubkey));
@@ -26,9 +31,9 @@ int main(int arc, char** argv) {
     assert(get_pubkey(&kp3, &pubkey));
     assert(tag_add_pubkey(&tag, pubkey));
 
-    const uint8_t* msg1 = "message 1";
+    const uint8_t* msg1 = (const uint8_t*) "message 1";
     size_t nmsg1 = sizeof "message 1";
-    const uint8_t* msg2 = "message 2";
+    const uint8_t* msg2 = (const uint8_t*) "message 2";
     size_t nmsg2 = sizeof "message 2";
 
     uint8_t sig1[1024];
