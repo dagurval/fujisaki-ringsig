@@ -1,6 +1,7 @@
 use key;
 use sig;
 use trace;
+use std::convert::TryInto;
 
 /// For data structures that we cannot export. This hides it behind a void
 /// pointer.
@@ -10,6 +11,12 @@ pub struct OpaquePtr(*mut std::ffi::c_void);
 #[no_mangle]
 pub extern fn generate_keypair() -> OpaquePtr {
     OpaquePtr(Box::into_raw(Box::new(key::KeyPair::generate())) as *mut _)
+}
+
+#[no_mangle]
+pub extern fn generate_keypair_from_bits(bits: *const u8) -> OpaquePtr {
+    let bits = raw_to_vector(bits, 32);
+    OpaquePtr(Box::into_raw(Box::new(key::KeyPair::generate_from_bits(bits.try_into().unwrap()))) as *mut _)
 }
 
 #[no_mangle]

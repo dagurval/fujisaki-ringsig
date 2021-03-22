@@ -84,6 +84,14 @@ impl KeyPair {
 
         KeyPair { pubkey, privkey }
     }
+
+    pub fn generate_from_bits(bytes: [u8; 32]) -> KeyPair {
+        let s = Scalar::from_bits(bytes);
+        let pubkey = PublicKey(&s * &RISTRETTO_BASEPOINT_POINT);
+        let privkey = PrivateKey(s, pubkey.0.clone());
+
+        KeyPair { pubkey, privkey }
+    }
 }
 
 #[cfg(test)]
@@ -107,5 +115,22 @@ mod test {
         let bytes = [1u8; 31];
         assert_eq!(PublicKey::from_bytes(&bytes), None);
         assert_eq!(PrivateKey::from_bytes(&bytes), None);
+    }
+
+    #[test]
+    fn test_generate_from_bits() {
+        let bytes = [0x42; 32];
+        let kp1 = KeyPair::generate_from_bits(bytes);
+        let kp2 = KeyPair::generate_from_bits(bytes);
+
+        // Should have generated the same keypair given the same seed.
+        assert_eq!(kp1.pubkey, kp2.pubkey);
+        assert_eq!(kp1.privkey, kp2.privkey);
+
+        let bytes2 = [0x43; 32];
+        let kp3 = KeyPair::generate_from_bits(bytes2);
+        // Different seed should produce different keypair:
+        assert_ne!(kp3.pubkey, kp1.pubkey);
+        assert_ne!(kp3.privkey, kp1.privkey);
     }
 }
